@@ -26,44 +26,57 @@ const HomeCmp = () => {
         setSearch(val)
     }
 
-    const postData = (val) =>{
+    const postData = (val) => {
         localStorage.setItem('movie', JSON.stringify(val))
-      }
+    }
+
+    const allMovieData = allTvData
+        .filter(val => {
+            if (search === "") {
+                return val
+            } else if (val.show.name.toLowerCase().includes(search.toLocaleLowerCase())) {
+                return val
+            }
+        });
 
     return (
         <>
-           
-           <NavBar getvalue={getvalue}/>
+
+            <NavBar getvalue={getvalue} />
 
             {/* Card */}
             <Container>
                 <Row>
                     {
-                        allTvData.filter((val) => {
-                            if (search === "") {
-                                return val
-                            } else if (val.show.name.toLowerCase().includes(search.toLocaleLowerCase())) {
-                                return val
-                            }
-                        }).map((val, index) => (
-                    // console.log(val)
-                    <Col style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '50px' }} key={index}>
-                        <Card style={{ width: '18rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)', transition: '0.3s' }} >
-                            <Card.Img variant="top" src={val.show.image.medium} style={{ height: '20rem' }} />
-                            <Card.Body>
-                                <Card.Title>{val.show.name}</Card.Title>
-                                <Card.Text>
-                                Language:-{val.show.language}
-                                </Card.Text>
-                                <Link to='/summary'>
-                                    <Button variant="primary" onClick={()=>postData(val)}>Read More</Button>
-                                </Link>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    )
-                    )
-                }
+                        // allTvData.filter(function (val) {
+                        //     if (search === "") {
+                        //         return val
+                        //     } else if (val.show.name.toLowerCase().includes(search.toLocaleLowerCase())) {
+                        //         return val
+                        //     }
+                        // })
+                        allMovieData.map(function (val, index) {
+                            return (
+
+                                // console.log(val)
+                                <Col style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '50px' }} key={index}>
+                                    <Card style={{ width: '18rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)', transition: '0.3s' }} >
+                                        <Card.Img variant="top" src={val.show.image.medium} style={{ height: '20rem' }} />
+                                        <Card.Body>
+                                            <Card.Title>{val.show.name}</Card.Title>
+                                            <Card.Text>
+                                                Language:-{val.show.language}
+                                            </Card.Text>
+                                            <Link to='/summary'>
+                                                <Button variant="primary" onClick={() => postData(val)}>Read More</Button>
+                                            </Link>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            )
+                        }
+                        )
+                    }
                 </Row>
             </Container>
         </>
