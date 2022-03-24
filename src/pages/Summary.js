@@ -12,7 +12,6 @@ const Summary = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    console.log(showMovie);
     return (
         <>
             <Navbar bg="dark" variant="dark">
